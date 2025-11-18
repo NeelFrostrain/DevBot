@@ -1,6 +1,6 @@
 {
-  "name": "advanced-discord-bot",
-  "version": "3.0.0",
+  "name": "dev-bot",
+  "version": "1.0.1",
   "description": "Full-featured Discord bot with economy, leveling, battles, analytics, invite tracking, moderation, and web dashboard",
   "main": "dist/index.js",
   "type": "module",

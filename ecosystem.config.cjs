@@ -1,6 +1,6 @@
 module.exports = {
   apps: [{
-    name: 'discord-bot',
+    name: 'dev-bot',
     script: './src/index.js',
     instances: 1,
     autorestart: true,

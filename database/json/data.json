@@ -516,17 +516,17 @@
         "1347827007534268418": {
           "userId": "1347827007534268418",
           "guildId": "1316439358609297418",
-          "messages": 2,
+          "messages": 4,
           "voiceMinutes": 0,
           "reactions": 0,
           "emojisUsed": {},
           "dailyMessages": {
-            "2025-11-19": 2
+            "2025-11-19": 4
           },
           "dailyVoice": {},
-          "lastActive": 1763508305825,
+          "lastActive": 1763509548616,
           "joinedAt": 1763508285509,
-          "activityScore": 2,
+          "activityScore": 4,
           "engagementScore": 0,
           "streak": 0
         }
@@ -556,14 +556,17 @@
           "guildId": "1316439358609297418",
           "name": "",
           "type": "text",
-          "messages": 2,
+          "messages": 4,
           "voiceMinutes": 0,
-          "activeUsers": {},
+          "activeUsers": [
+            "1347827007534268418"
+          ],
           "hourlyActivity": {
-            "4": 2
+            "4": 2,
+            "5": 2
           },
           "dailyActivity": {
-            "2025-11-19": 2
+            "2025-11-19": 4
           }
         }
       }
@@ -589,12 +592,12 @@
       },
       "1316439358609297418": {
         "guildId": "1316439358609297418",
-        "totalMessages": 2,
+        "totalMessages": 4,
         "totalVoiceMinutes": 0,
         "activeMembers": 0,
         "dailyStats": {
           "2025-11-19": {
-            "messages": 2,
+            "messages": 4,
             "voice": 0,
             "activeMembers": 0,
             "joins": 0,

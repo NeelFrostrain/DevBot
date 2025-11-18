@@ -99,6 +99,38 @@ export default {
     const args = message.content.slice(prefix.length).trim().split(/ +/);
     const commandName = args.shift()?.toLowerCase();
 
-    // Handle prefix commands here if needed
+    // Handle basic prefix commands
+    if (commandName === 'help') {
+      const embed = EmbedFactory.info('📚 Help - Use Slash Commands!')
+        .setDescription(
+          'This bot uses **Slash Commands** for better Discord integration!\n\n' +
+          '**How to use:**\n' +
+          '• Type `/` in the chat box\n' +
+          '• Select a command from the menu\n' +
+          '• Fill in the options\n\n' +
+          '**Popular Commands:**\n' +
+          '`/help` - View all commands\n' +
+          '`/rank` - Check your rank\n' +
+          '`/balance` - Check your balance\n' +
+          '`/hunt` - Hunt monsters\n' +
+          '`/serverstats` - View server stats\n\n' +
+          '**Need more help?**\n' +
+          'Use `/help` to see all 70+ commands organized by category!'
+        )
+        .setFooter({ text: 'Tip: Slash commands provide auto-complete and validation!' });
+
+      message.reply({ embeds: [embed] }).catch(() => {});
+    } else if (commandName === 'ping') {
+      const embed = EmbedFactory.info('🏓 Pong!')
+        .setDescription(`Use \`/ping\` for detailed latency information!`);
+      message.reply({ embeds: [embed] }).catch(() => {});
+    } else if (commandName) {
+      // For any other prefix command, suggest using slash commands
+      const embed = EmbedFactory.warning('Use Slash Commands', 
+        `Please use \`/${commandName}\` instead of \`${prefix}${commandName}\`\n\n` +
+        'This bot uses Discord\'s modern slash commands for better functionality!'
+      );
+      message.reply({ embeds: [embed] }).catch(() => {});
+    }
   }
 };
