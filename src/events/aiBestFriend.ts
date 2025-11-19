@@ -9,15 +9,20 @@ export default {
 
     // Check if bot is mentioned OR if it's a reply to the bot
     const botMention = `<@${client.user?.id}>`;
+    const isMentioned = message.content.includes(botMention);
     const isReplyToBot = message.reference && message.mentions.repliedUser?.id === client.user?.id;
     
-    if (!message.content.includes(botMention) && !isReplyToBot) return;
+    // Only respond if mentioned OR replied to (not both to avoid double reply)
+    if (!isMentioned && !isReplyToBot) return;
+    
+    // If it's both a mention and a reply, only treat it as a mention
+    const shouldUseReplyContext = isReplyToBot && !isMentioned;
 
     // Get the message without the mention
     let userMessage = message.content.replace(botMention, '').trim();
     
-    // If it's a reply to the bot, include context
-    if (isReplyToBot && message.reference) {
+    // If it's a reply to the bot (and not a mention), include context
+    if (shouldUseReplyContext && message.reference) {
       try {
         const repliedMessage = await message.channel.messages.fetch(message.reference.messageId!);
         if (repliedMessage.author.id === client.user?.id) {

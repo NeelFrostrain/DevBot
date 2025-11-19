@@ -405,6 +405,14 @@
       "autoKickFakes": false,
       "autoKickAlts": false,
       "suspiciousJoinThreshold": 5
+    },
+    "1316439358609297418": {
+      "guildId": "1316439358609297418",
+      "trackingEnabled": true,
+      "minAccountAge": 7,
+      "autoKickFakes": false,
+      "autoKickAlts": false,
+      "suspiciousJoinThreshold": 5
     }
   },
   "rankConfig": {
@@ -462,6 +470,15 @@
       "enabledChannels": [],
       "disabledChannels": [],
       "multipliers": {}
+    },
+    "1377573616534818898": {
+      "guildId": "1377573616534818898",
+      "xpPerMessage": 15,
+      "xpCooldown": 60000,
+      "rankRoles": [],
+      "enabledChannels": [],
+      "disabledChannels": [],
+      "multipliers": {}
     }
   },
   "analytics": {
@@ -513,7 +530,7 @@
         "1240639120704012290": {
           "userId": "1240639120704012290",
           "guildId": "1433467777766654146",
-          "messages": 260,
+          "messages": 269,
           "voiceMinutes": 0,
           "reactions": 6,
           "emojisUsed": {
@@ -521,12 +538,12 @@
             "👍": 2
           },
           "dailyMessages": {
-            "2025-11-19": 260
+            "2025-11-19": 269
           },
           "dailyVoice": {},
-          "lastActive": 1763551462784,
+          "lastActive": 1763551724140,
           "joinedAt": 1763531700207,
-          "activityScore": 261,
+          "activityScore": 270,
           "engagementScore": 0,
           "streak": 0
         },
@@ -623,6 +640,25 @@
           "engagementScore": 0,
           "streak": 0
         }
+      },
+      "1377573616534818898": {
+        "1347827007534268418": {
+          "userId": "1347827007534268418",
+          "guildId": "1377573616534818898",
+          "messages": 3,
+          "voiceMinutes": 0,
+          "reactions": 0,
+          "emojisUsed": {},
+          "dailyMessages": {
+            "2025-11-19": 3
+          },
+          "dailyVoice": {},
+          "lastActive": 1763558408418,
+          "joinedAt": 1763558363865,
+          "activityScore": 3,
+          "engagementScore": 0,
+          "streak": 0
+        }
       }
     },
     "channels": {
@@ -692,7 +728,7 @@
           "guildId": "1433467777766654146",
           "name": "",
           "type": "text",
-          "messages": 681,
+          "messages": 690,
           "voiceMinutes": 28,
           "activeUsers": [
             "1240639120704012290",
@@ -708,10 +744,10 @@
             "11": 46,
             "12": 79,
             "15": 49,
-            "16": 158
+            "16": 167
           },
           "dailyActivity": {
-            "2025-11-19": 681
+            "2025-11-19": 690
           }
         },
         "1433697781419081788": {
@@ -777,17 +813,55 @@
             "2025-11-19": 50
           }
         }
+      },
+      "1377573616534818898": {
+        "1377605180983345366": {
+          "channelId": "1377605180983345366",
+          "guildId": "1377573616534818898",
+          "name": "",
+          "type": "text",
+          "messages": 2,
+          "voiceMinutes": 0,
+          "activeUsers": [
+            "1347827007534268418"
+          ],
+          "hourlyActivity": {
+            "13": 1,
+            "18": 1
+          },
+          "dailyActivity": {
+            "2025-11-19": 2
+          }
+        },
+        "1377577894443745330": {
+          "channelId": "1377577894443745330",
+          "guildId": "1377573616534818898",
+          "name": "",
+          "type": "text",
+          "messages": 4,
+          "voiceMinutes": 0,
+          "activeUsers": [
+            "1347827007534268418"
+          ],
+          "hourlyActivity": {
+            "13": 2,
+            "18": 2
+          },
+          "dailyActivity": {
+            "2025-11-19": 4
+          }
+        }
       }
     },
     "server": {
       "1433467777766654146": {
         "guildId": "1433467777766654146",
-        "totalMessages": 724,
+        "totalMessages": 733,
         "totalVoiceMinutes": 29,
         "activeMembers": 0,
         "dailyStats": {
           "2025-11-19": {
-            "messages": 724,
+            "messages": 733,
             "voice": 29,
             "activeMembers": 0,
             "joins": 0,
@@ -806,6 +880,24 @@
         "dailyStats": {
           "2025-11-19": {
             "messages": 89,
+            "voice": 0,
+            "activeMembers": 0,
+            "joins": 0,
+            "leaves": 1
+          }
+        },
+        "growthRate": 0,
+        "activityIndex": 0,
+        "peakHours": []
+      },
+      "1377573616534818898": {
+        "guildId": "1377573616534818898",
+        "totalMessages": 6,
+        "totalVoiceMinutes": 0,
+        "activeMembers": 0,
+        "dailyStats": {
+          "2025-11-19": {
+            "messages": 6,
             "voice": 0,
             "activeMembers": 0,
             "joins": 0,
@@ -934,6 +1026,23 @@
         "level": 1,
         "totalXP": 125,
         "messages": 7,
+        "lastXPGain": 0,
+        "rankCard": {
+          "backgroundColor": "#2b2d31",
+          "progressBarColor": "#5865f2",
+          "textColor": "#ffffff",
+          "accentColor": "#5865f2"
+        }
+      }
+    },
+    "1377573616534818898": {
+      "1347827007534268418": {
+        "id": "1347827007534268418",
+        "guildId": "1377573616534818898",
+        "xp": 45,
+        "level": 1,
+        "totalXP": 45,
+        "messages": 2,
         "lastXPGain": 0,
         "rankCard": {
           "backgroundColor": "#2b2d31",
