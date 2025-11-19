@@ -55,23 +55,30 @@ export default {
                         console.error('Failed to add rank role:', err);
                     }
                 }
-                // Send level up message
+                // Send level up message (mention outside, username inside)
                 const embed = EmbedFactory.leveling('⭐ Level Up! 🎉')
-                    .setDescription(`Congratulations <@${message.author.id}>! You've reached **Level ${result.newLevel}**!`)
-                    .addFields({ name: '⭐ XP Gained', value: `+${result.xpGained}`, inline: true }, { name: '💫 Total XP', value: `${result.xp.toLocaleString()}`, inline: true })
+                    .setDescription(`Congratulations **${message.author.username}**! You've reached **Level ${result.newLevel}**!`)
+                    .setThumbnail(message.author.displayAvatarURL({ size: 128 }))
+                    .addFields({ name: '⭐ XP Gained', value: `+${result.xpGained}`, inline: true }, { name: '💫 Total XP', value: `${result.xp.toLocaleString()}`, inline: true }, { name: '🎯 Next Level', value: `${result.newLevel + 1}`, inline: true })
                     .setTimestamp();
                 if (rankRole) {
                     embed.addFields({ name: '🎁 Reward Unlocked', value: `<@&${rankRole.roleId}>` });
                 }
-                // Send to configured channel or reply
+                // Send to configured channel or reply (with mention outside embed)
+                const messageContent = `<@${message.author.id}>`;
+                const messageOptions = {
+                    content: messageContent,
+                    embeds: [embed],
+                    allowedMentions: { users: [message.author.id] }
+                };
                 if (config.levelUpChannel) {
                     const channel = message.guild.channels.cache.get(config.levelUpChannel);
                     if (channel?.isTextBased()) {
-                        channel.send({ embeds: [embed] }).catch(() => { });
+                        channel.send(messageOptions).catch(() => { });
                     }
                 }
                 else {
-                    message.reply({ embeds: [embed] }).catch(() => { });
+                    message.reply(messageOptions).catch(() => { });
                 }
             }
         }

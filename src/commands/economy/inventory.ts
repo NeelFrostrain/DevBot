@@ -20,7 +20,7 @@ export default {
       const inventoryPath = `inventory.${interaction.guildId}.${target.id}`;
       const inventory = await db.get(inventoryPath) || { items: [] };
 
-      const embed = EmbedFactory.economy(`<@${target.id}>'s Inventory`)
+      const embed = EmbedFactory.economy(`🎒 ${target.username}'s Inventory`)
         .setThumbnail(target.displayAvatarURL());
 
       if (!inventory.items || inventory.items.length === 0) {
@@ -40,7 +40,11 @@ export default {
         embed.setDescription(description || 'No items');
       }
 
-      await interaction.reply({ embeds: [embed] });
+      await interaction.reply({ 
+        content: `<@${target.id}>`,
+        embeds: [embed],
+        allowedMentions: { users: [target.id] }
+      });
     } catch (error) {
       console.error('Inventory command error:', error);
       const errorEmbed = EmbedFactory.error('Error', 'Failed to fetch inventory.');

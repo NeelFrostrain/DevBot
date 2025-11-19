@@ -33,7 +33,7 @@ export default {
       const totalDamage = baseDamage + weaponDamage;
       const totalDefense = baseDefense + armorDefense;
 
-      const embed = EmbedFactory.battle(`<@${target.id}>'s Battle Stats`)
+      const embed = EmbedFactory.battle(`⚔️ ${target.username}'s Battle Stats`)
         .setThumbnail(target.displayAvatarURL())
         .addFields(
           { name: '⚔️ Attack Power', value: `${totalDamage} (Base: ${baseDamage} + Weapon: ${weaponDamage})`, inline: false },
@@ -43,7 +43,11 @@ export default {
           { name: '❤️ HP', value: '100', inline: true }
         );
 
-      await interaction.reply({ embeds: [embed] });
+      await interaction.reply({ 
+        content: `<@${target.id}>`,
+        embeds: [embed],
+        allowedMentions: { users: [target.id] }
+      });
     } catch (error) {
       console.error('Stats command error:', error);
       const errorEmbed = EmbedFactory.error('Error', 'Failed to fetch stats.');

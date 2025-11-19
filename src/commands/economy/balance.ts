@@ -18,7 +18,7 @@ export default {
     try {
       const user = await getUser(target.id, interaction.guildId!);
 
-      const embed = EmbedFactory.economy(`<@${target.id}>'s Balance`)
+      const embed = EmbedFactory.economy(`💰 ${target.username}'s Balance`)
         .setThumbnail(target.displayAvatarURL())
         .addFields(
           { name: '💵 Wallet', value: `${user.balance.toLocaleString()} coins`, inline: true },
@@ -26,7 +26,11 @@ export default {
           { name: '💎 Total', value: `${(user.balance + user.bank).toLocaleString()} coins`, inline: true }
         );
 
-      await interaction.reply({ embeds: [embed] });
+      await interaction.reply({ 
+        content: `<@${target.id}>`,
+        embeds: [embed],
+        allowedMentions: { users: [target.id] }
+      });
     } catch (error) {
       console.error('Balance command error:', error);
       const errorEmbed = EmbedFactory.error(

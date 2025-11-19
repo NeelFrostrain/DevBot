@@ -69,10 +69,14 @@ export default {
                 await db.set(key, userPets);
                 user.balance -= cost;
                 await updateUser(interaction.user.id, interaction.guildId, { balance: user.balance });
-                const embed = EmbedFactory.success('Pet Summoned!')
-                    .setDescription(`<@${interaction.user.id}> summoned a **${pet.name}**!`)
+                const embed = EmbedFactory.success('🐾 Pet Summoned!')
+                    .setDescription(`You summoned a **${pet.name}**!`)
                     .addFields({ name: '🎭 Rarity', value: pet.rarity, inline: true }, { name: '⚔️ Damage', value: `${pet.damage}`, inline: true }, { name: '❤️ HP', value: `${pet.hp}`, inline: true });
-                await interaction.reply({ embeds: [embed] });
+                await interaction.reply({
+                    content: `<@${interaction.user.id}>`,
+                    embeds: [embed],
+                    allowedMentions: { users: [interaction.user.id] }
+                });
             }
         }
         catch (error) {

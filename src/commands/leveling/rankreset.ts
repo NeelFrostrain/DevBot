@@ -26,10 +26,14 @@ export default {
 
       const embed = EmbedFactory.success(
         'Rank Reset',
-        `Successfully reset <@${target.id}>'s rank and XP.`
+        `Successfully reset **${target.username}**'s rank and XP.`
       );
 
-      await interaction.reply({ embeds: [embed] });
+      await interaction.reply({ 
+        content: `<@${target.id}>`,
+        embeds: [embed],
+        allowedMentions: { users: [target.id] }
+      });
     } catch (error) {
       console.error('Rankreset command error:', error);
       const errorEmbed = EmbedFactory.error('Error', 'Failed to reset rank.');

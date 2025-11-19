@@ -31,11 +31,15 @@ export default {
             const messagesPerLevel = levelData.messages ? Math.floor(levelData.messages / level) : 0;
             // Calculate XP to next level
             const xpToNext = requiredXP - currentXP;
-            const embed = EmbedFactory.leveling(`<@${target.id}>'s Rank Statistics`)
+            const embed = EmbedFactory.leveling(`📊 ${target.username}'s Rank Statistics`)
                 .setThumbnail(target.displayAvatarURL({ size: 256 }))
                 .setDescription(`${progressBar}\n**${progressPercent}%** to next level`)
                 .addFields({ name: '🏆 Server Rank', value: `#${rank}`, inline: true }, { name: '📊 Current Level', value: `${level}`, inline: true }, { name: '⭐ Current XP', value: `${currentXP}/${requiredXP}`, inline: true }, { name: '💫 Total XP', value: `${levelData.xp.toLocaleString()}`, inline: true }, { name: '📈 XP to Next Level', value: `${xpToNext.toLocaleString()}`, inline: true }, { name: '💬 Total Messages', value: `${levelData.messages || 0}`, inline: true }, { name: '📊 Avg Messages/Level', value: `${messagesPerLevel}`, inline: true }, { name: '🎯 Estimated Messages to Level', value: `${Math.ceil(xpToNext / 15)}`, inline: true });
-            await interaction.reply({ embeds: [embed] });
+            await interaction.reply({
+                content: `<@${target.id}>`,
+                embeds: [embed],
+                allowedMentions: { users: [target.id] }
+            });
         }
         catch (error) {
             console.error('Rankstats command error:', error);

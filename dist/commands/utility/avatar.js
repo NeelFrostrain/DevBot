@@ -9,8 +9,12 @@ export default {
         .setRequired(false)),
     async execute(interaction, client) {
         const target = interaction.options.getUser('user') || interaction.user;
-        const embed = EmbedFactory.info(`<@${target.id}>'s Avatar`)
+        const embed = EmbedFactory.info(`🖼️ ${target.username}'s Avatar`)
             .setImage(target.displayAvatarURL({ size: 1024 }));
-        await interaction.reply({ embeds: [embed] });
+        await interaction.reply({
+            content: `<@${target.id}>`,
+            embeds: [embed],
+            allowedMentions: { users: [target.id] }
+        });
     }
 };

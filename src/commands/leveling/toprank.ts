@@ -32,7 +32,7 @@ export default {
         const medal = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : `**${i + 1}.**`;
         
         description += `${medal} <@${user.id}>\n`;
-        description += `└ Level **${user.level}** • ${user.xp.toLocaleString()} XP • ${user.messages || 0} messages\n\n`;
+        description += `└ Level **${user.level}** • ${user.totalXP.toLocaleString()} Total XP • ${user.messages || 0} messages\n\n`;
       }
 
       const embed = EmbedFactory.leveling(`🏆 Top ${limit} Ranks`)

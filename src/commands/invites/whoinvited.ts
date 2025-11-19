@@ -22,7 +22,7 @@ export default {
 
       if (!inviteUse) {
         return interaction.reply({
-          embeds: [EmbedFactory.error('No Data', `No invite data found for <@${target.id}>.`)],
+          embeds: [EmbedFactory.error('No Data', `No invite data found for **${target.username}**.`)],
           ephemeral: true
         });
       }
@@ -32,10 +32,10 @@ export default {
         ? `${Math.floor(inviteUse.accountAge * 24)} hours`
         : `${accountAgeDays} days`;
 
-      const embed = EmbedFactory.leveling(`🎫 Invite Information`)
+      const embed = EmbedFactory.leveling(`🎫 ${target.username}'s Invite Information`)
         .setThumbnail(target.displayAvatarURL())
         .addFields(
-          { name: '👤 User', value: `${target.tag}\n<@${target.id}>`, inline: true },
+          { name: '👤 Username', value: target.username, inline: true },
           { name: '🎫 Invited By', value: inviteUse.inviterId !== 'unknown' ? `<@${inviteUse.inviterId}>` : 'Unknown', inline: true },
           { name: '📅 Account Age', value: accountAgeText, inline: true },
           { name: '🔗 Invite Code', value: inviteUse.inviteCode, inline: true },
@@ -57,7 +57,11 @@ export default {
         });
       }
 
-      await interaction.reply({ embeds: [embed] });
+      await interaction.reply({ 
+        content: `<@${target.id}>`,
+        embeds: [embed],
+        allowedMentions: { users: [target.id] }
+      });
     } catch (error) {
       console.error('Whoinvited command error:', error);
       await interaction.reply({

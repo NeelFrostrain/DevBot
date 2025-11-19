@@ -154,3 +154,38 @@ All user interactions now properly use `<@userId>` format instead of plain text 
 ## ✅ Total: 24 Files Modified
 
 All user tagging is now consistent across the entire bot!
+
+---
+
+## 🆕 Additional Updates
+
+### Leaderboard System Improvements
+
+#### Separate Leaderboards
+- ✅ `/leaderboard type:levels` - Shows level rankings with XP and messages
+- ✅ `/leaderboard type:economy` - Shows wealth rankings with wallet + bank totals
+
+#### Fixed Data Retrieval
+- ✅ Updated `getLeaderboard()` function to properly fetch level data
+- ✅ Added `getEconomyLeaderboard()` function for economy rankings
+- ✅ Fixed database path resolution for both direct and nested structures
+- ✅ Added proper filtering to exclude users with 0 XP/wealth
+- ✅ Improved error handling and empty state messages
+
+#### Display Format
+**Level Leaderboard:**
+```
+🥇 @User
+└ Level 5 • 1,234 XP • 45 messages
+
+🥈 @User
+└ Level 3 • 890 XP • 32 messages
+```
+
+**Economy Leaderboard:**
+```
+🥇 @User
+└ 💰 5,000 coins (Wallet: 3,000 | Bank: 2,000)
+
+🥈 @User
+└ 💰 2,500 coins (Wallet: 1,500 | Bank: 1,

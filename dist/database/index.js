@@ -94,6 +94,23 @@ export async function getUserLevel(userId, guildId) {
         };
         await db.set(path, level);
     }
+    else {
+        // Ensure totalXP and xp are in sync
+        if (!level.totalXP && level.xp) {
+            level.totalXP = level.xp;
+        }
+        else if (!level.xp && level.totalXP) {
+            level.xp = level.totalXP;
+        }
+        // Ensure messages field exists
+        if (typeof level.messages !== 'number') {
+            level.messages = 0;
+        }
+        // Ensure level is at least 1
+        if (!level.level || level.level < 1) {
+            level.level = 1;
+        }
+    }
     return level;
 }
 export async function getGuildRankConfig(guildId) {

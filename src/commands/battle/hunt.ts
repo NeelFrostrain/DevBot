@@ -93,7 +93,7 @@ export default {
 
       const battle = simulateBattle(playerHP, playerDamage, monster.hp, monster.damage);
 
-      const embed = EmbedFactory.battle(`<@${userId}> Hunting ${monster.name}`)
+      const embed = EmbedFactory.battle(`⚔️ Hunting ${monster.name}`)
         .setDescription(battle.log.join('\n'));
 
       if (battle.won) {
@@ -108,12 +108,18 @@ export default {
           { name: '⭐ XP Earned', value: `${monster.xp.toLocaleString()}`, inline: true },
           { name: '❤️ HP Remaining', value: `${battle.remainingHP}`, inline: true }
         );
+        embed.setColor('#00FF00');
       } else {
-        embed.setDescription(`<@${userId}> lost the hunt!\n\n${battle.log.join('\n')}`);
+        embed.setDescription(`You lost the hunt!\n\n${battle.log.join('\n')}`);
+        embed.setColor('#FF0000');
       }
 
       await db.set(cooldownKey, now);
-      await interaction.reply({ embeds: [embed] });
+      await interaction.reply({ 
+        content: `<@${userId}>`,
+        embeds: [embed],
+        allowedMentions: { users: [userId] }
+      });
     } catch (error) {
       console.error('Hunt command error:', error);
       const errorEmbed = EmbedFactory.error('Error', 'Failed to hunt. Please try again.');

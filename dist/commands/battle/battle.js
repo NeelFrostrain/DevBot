@@ -84,28 +84,32 @@ export default {
                 }
                 if (i.customId === 'accept_battle') {
                     const battle = simulateBattle(100, 20, 100, 20);
-                    const resultEmbed = EmbedFactory.battle('Battle Results')
-                        .setDescription(`${battle.won ? `<@${interaction.user.id}>` : `<@${target.id}>`} won the battle!\n\n${battle.log.join('\n')}`);
+                    const winnerUser = battle.won ? interaction.user : target;
+                    const loserUser = battle.won ? target : interaction.user;
+                    const resultEmbed = EmbedFactory.battle('⚔️ Battle Results')
+                        .setDescription(`**${winnerUser.username}** won the battle!\n\n${battle.log.join('\n')}`);
                     if (wager > 0) {
                         const winner = battle.won ? interaction.user.id : target.id;
                         const loser = battle.won ? target.id : interaction.user.id;
-                        const winnerUser = await getUser(winner, interaction.guildId);
-                        const loserUser = await getUser(loser, interaction.guildId);
-                        if (loserUser.balance >= wager) {
-                            loserUser.balance -= wager;
-                            winnerUser.balance += wager;
-                            await updateUser(winner, interaction.guildId, { balance: winnerUser.balance });
-                            await updateUser(loser, interaction.guildId, { balance: loserUser.balance });
-                            resultEmbed.addFields({ name: '💰 Winner', value: `<@${winner}> won ${wager.toLocaleString()} coins!` });
+                        const winnerData = await getUser(winner, interaction.guildId);
+                        const loserData = await getUser(loser, interaction.guildId);
+                        if (loserData.balance >= wager) {
+                            loserData.balance -= wager;
+                            winnerData.balance += wager;
+                            await updateUser(winner, interaction.guildId, { balance: winnerData.balance });
+                            await updateUser(loser, interaction.guildId, { balance: loserData.balance });
+                            resultEmbed.addFields({ name: '💰 Winnings', value: `${wager.toLocaleString()} coins`, inline: true });
                         }
                         else {
-                            resultEmbed.addFields({ name: '⚠️ Note', value: `<@${loser}> didn't have enough coins for wager.` });
+                            resultEmbed.addFields({ name: '⚠️ Note', value: `Loser didn't have enough coins for wager.` });
                         }
                     }
-                    else {
-                        resultEmbed.addFields({ name: '🏆 Winner', value: `<@${battle.won ? interaction.user.id : target.id}>` });
-                    }
-                    await i.update({ embeds: [resultEmbed], components: [] });
+                    resultEmbed.setColor(battle.won ? '#00FF00' : '#FF0000');
+                    await i.update({
+                        content: `<@${winnerUser.id}> vs <@${loserUser.id}>`,
+                        embeds: [resultEmbed],
+                        components: []
+                    });
                 }
                 else {
                     const declineEmbed = EmbedFactory.warning('Battle Declined', 'The battle was declined.');

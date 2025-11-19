@@ -42,7 +42,7 @@ export default {
       // Calculate XP to next level
       const xpToNext = requiredXP - currentXP;
 
-      const embed = EmbedFactory.leveling(`<@${target.id}>'s Rank Statistics`)
+      const embed = EmbedFactory.leveling(`📊 ${target.username}'s Rank Statistics`)
         .setThumbnail(target.displayAvatarURL({ size: 256 }))
         .setDescription(`${progressBar}\n**${progressPercent}%** to next level`)
         .addFields(
@@ -56,7 +56,11 @@ export default {
           { name: '🎯 Estimated Messages to Level', value: `${Math.ceil(xpToNext / 15)}`, inline: true }
         );
 
-      await interaction.reply({ embeds: [embed] });
+      await interaction.reply({ 
+        content: `<@${target.id}>`,
+        embeds: [embed],
+        allowedMentions: { users: [target.id] }
+      });
     } catch (error) {
       console.error('Rankstats command error:', error);
       const errorEmbed = EmbedFactory.error('Error', 'Failed to fetch rank statistics.');

@@ -32,12 +32,16 @@ export default {
             const { level, currentXP, requiredXP } = calculateLevel(levelData.xp);
             levelData.level = level;
             await updateUserLevel(target.id, interaction.guildId, levelData);
-            const embed = EmbedFactory.success('XP Removed', `Successfully removed **${amount} XP** from <@${target.id}>!`)
+            const embed = EmbedFactory.success('XP Removed', `Successfully removed **${amount} XP** from **${target.username}**!`)
                 .addFields({ name: '📊 New Level', value: `${level}`, inline: true }, { name: '💫 Total XP', value: `${levelData.xp.toLocaleString()}`, inline: true });
             if (level < oldLevel) {
-                embed.addFields({ name: '📉 Level Down', value: `<@${target.id}> is now level **${level}** (was ${oldLevel})` });
+                embed.addFields({ name: '📉 Level Down', value: `**${target.username}** is now level **${level}** (was ${oldLevel})` });
             }
-            await interaction.reply({ embeds: [embed] });
+            await interaction.reply({
+                content: `<@${target.id}>`,
+                embeds: [embed],
+                allowedMentions: { users: [target.id] }
+            });
         }
         catch (error) {
             console.error('Removexp command error:', error);

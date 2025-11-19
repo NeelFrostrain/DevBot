@@ -46,7 +46,7 @@ export default {
 
       const embed = EmbedFactory.success(
         'XP Removed',
-        `Successfully removed **${amount} XP** from <@${target.id}>!`
+        `Successfully removed **${amount} XP** from **${target.username}**!`
       )
         .addFields(
           { name: '📊 New Level', value: `${level}`, inline: true },
@@ -54,10 +54,14 @@ export default {
         );
 
       if (level < oldLevel) {
-        embed.addFields({ name: '📉 Level Down', value: `<@${target.id}> is now level **${level}** (was ${oldLevel})` });
+        embed.addFields({ name: '📉 Level Down', value: `**${target.username}** is now level **${level}** (was ${oldLevel})` });
       }
 
-      await interaction.reply({ embeds: [embed] });
+      await interaction.reply({ 
+        content: `<@${target.id}>`,
+        embeds: [embed],
+        allowedMentions: { users: [target.id] }
+      });
     } catch (error) {
       console.error('Removexp command error:', error);
       const errorEmbed = EmbedFactory.error('Error', 'Failed to remove XP.');

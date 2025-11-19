@@ -22,7 +22,7 @@ export default {
 
       if (!activity) {
         return interaction.editReply({
-          embeds: [EmbedFactory.error('No Data', `No activity data found for <@${target.id}>.`)]
+          embeds: [EmbedFactory.error('No Data', `No activity data found for ${target.username}.`)]
         });
       }
 
@@ -37,7 +37,7 @@ export default {
         .map(([emoji, count]) => `${emoji} (${count})`)
         .join(', ') || 'None';
 
-      const embed = EmbedFactory.leveling(`📊 <@${target.id}>'s Activity`)
+      const embed = EmbedFactory.leveling(`📊 ${target.username}'s Activity`)
         .setThumbnail(target.displayAvatarURL({ size: 256 }))
         .addFields(
           { name: '💬 Total Messages', value: activity.messages.toLocaleString(), inline: true },
@@ -53,7 +53,10 @@ export default {
         )
         .setFooter({ text: `Member since ${new Date(activity.joinedAt).toLocaleDateString()}` });
 
-      await interaction.editReply({ embeds: [embed] });
+      await interaction.editReply({ 
+        content: `<@${target.id}>`,
+        embeds: [embed]
+      });
     } catch (error) {
       console.error('Useractivity command error:', error);
       await interaction.editReply({

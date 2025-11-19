@@ -19,9 +19,13 @@ export default {
             .sort((a, b) => b.position - a.position)
             .map(role => role.toString())
             .slice(0, 10);
-        const embed = EmbedFactory.info(`<@${target.id}>'s Information`)
+        const embed = EmbedFactory.info(`👤 ${target.username}'s Information`)
             .setThumbnail(target.displayAvatarURL({ size: 256 }))
-            .addFields({ name: '👤 User', value: `<@${target.id}>`, inline: true }, { name: '🆔 ID', value: target.id, inline: true }, { name: '🤖 Bot', value: target.bot ? 'Yes' : 'No', inline: true }, { name: '📅 Account Created', value: `<t:${Math.floor(target.createdTimestamp / 1000)}:R>`, inline: true }, { name: '📥 Joined Server', value: `<t:${Math.floor(member.joinedTimestamp / 1000)}:R>`, inline: true }, { name: `🎭 Roles [${roles.length}]`, value: roles.join(', ') || 'None', inline: false });
-        await interaction.reply({ embeds: [embed] });
+            .addFields({ name: '👤 Username', value: target.username, inline: true }, { name: '🆔 ID', value: target.id, inline: true }, { name: '🤖 Bot', value: target.bot ? 'Yes' : 'No', inline: true }, { name: '📅 Account Created', value: `<t:${Math.floor(target.createdTimestamp / 1000)}:R>`, inline: true }, { name: '📥 Joined Server', value: `<t:${Math.floor(member.joinedTimestamp / 1000)}:R>`, inline: true }, { name: `🎭 Roles [${roles.length}]`, value: roles.join(', ') || 'None', inline: false });
+        await interaction.reply({
+            content: `<@${target.id}>`,
+            embeds: [embed],
+            allowedMentions: { users: [target.id] }
+        });
     }
 };
