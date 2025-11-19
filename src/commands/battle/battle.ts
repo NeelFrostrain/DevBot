@@ -77,7 +77,7 @@ export default {
 
     try {
       if (wager > 0) {
-        const user = await getUser(interaction.user.id, interaction.guildId!);
+        const user = await getUser(interaction.user.id, 'global');
         if (user.balance < wager) {
           const embed = EmbedFactory.error('Insufficient Funds', `You don't have enough coins to wager!`);
           return interaction.reply({ embeds: [embed], ephemeral: true });
@@ -122,14 +122,14 @@ export default {
             const winner = battle.won ? interaction.user.id : target.id;
             const loser = battle.won ? target.id : interaction.user.id;
 
-            const winnerData = await getUser(winner, interaction.guildId!);
-            const loserData = await getUser(loser, interaction.guildId!);
+            const winnerData = await getUser(winner, 'global');
+            const loserData = await getUser(loser, 'global');
 
             if (loserData.balance >= wager) {
               loserData.balance -= wager;
               winnerData.balance += wager;
-              await updateUser(winner, interaction.guildId!, { balance: winnerData.balance });
-              await updateUser(loser, interaction.guildId!, { balance: loserData.balance });
+              await updateUser(winner, 'global', { balance: winnerData.balance });
+              await updateUser(loser, 'global', { balance: loserData.balance });
               resultEmbed.addFields({ name: '💰 Winnings', value: `${wager.toLocaleString()} coins`, inline: true });
             } else {
               resultEmbed.addFields({ name: '⚠️ Note', value: `Loser didn't have enough coins for wager.` });

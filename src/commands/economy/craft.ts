@@ -41,7 +41,7 @@ export default {
     try {
       if (subcommand === 'list') {
         const recipes = getAllRecipes();
-        const levelData = await getUserLevel(interaction.user.id, interaction.guildId!);
+        const levelData = await getUserLevel(interaction.user.id, 'global');
         
         const embed = EmbedFactory.economy('🔨 Crafting Recipes')
           .setDescription('Use `/craft recipe <item>` to view details\nUse `/craft make <item>` to craft');
@@ -79,7 +79,7 @@ export default {
           });
         }
 
-        const { canCraft: canMake, missing } = await canCraft(interaction.user.id, interaction.guildId!, itemId);
+        const { canCraft: canMake, missing } = await canCraft(interaction.user.id, 'global', itemId);
         
         const embed = EmbedFactory.economy('🔨 Recipe Details')
           .setDescription(formatRecipe(recipe));
@@ -99,7 +99,7 @@ export default {
 
       if (subcommand === 'make') {
         const itemId = interaction.options.getString('item', true);
-        const result = await craftItem(interaction.user.id, interaction.guildId!, itemId);
+        const result = await craftItem(interaction.user.id, 'global', itemId);
 
         if (!result.success) {
           return interaction.reply({

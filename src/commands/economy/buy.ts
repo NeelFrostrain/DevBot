@@ -31,7 +31,7 @@ export default {
     }
 
     try {
-      const user = await getUser(interaction.user.id, interaction.guildId!);
+      const user = await getUser(interaction.user.id, 'global');
       const totalCost = item.price * amount;
 
       if (user.balance < totalCost) {
@@ -43,7 +43,7 @@ export default {
       }
 
       user.balance -= totalCost;
-      await updateUser(interaction.user.id, interaction.guildId!, { balance: user.balance });
+      await updateUser(interaction.user.id, 'global', { balance: user.balance });
 
       const db = getDatabase();
       const inventoryPath = `inventory.${interaction.guildId}.${interaction.user.id}`;

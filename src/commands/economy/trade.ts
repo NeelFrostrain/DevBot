@@ -41,7 +41,7 @@ export default {
     }
 
     try {
-      const user = await getUser(interaction.user.id, interaction.guildId!);
+      const user = await getUser(interaction.user.id, 'global');
 
       if (user.balance < amount) {
         const embed = EmbedFactory.error(
@@ -84,18 +84,18 @@ export default {
         }
 
         if (i.customId === 'accept_trade') {
-          const fromUser = await getUser(interaction.user.id, interaction.guildId!);
+          const fromUser = await getUser(interaction.user.id, 'global');
           
           if (fromUser.balance < amount) {
             const errorEmbed = EmbedFactory.error('Trade Failed', 'The sender doesn\'t have enough coins anymore.');
             await i.update({ embeds: [errorEmbed], components: [] });
           } else {
             fromUser.balance -= amount;
-            await updateUser(interaction.user.id, interaction.guildId!, { balance: fromUser.balance });
+            await updateUser(interaction.user.id, 'global', { balance: fromUser.balance });
 
-            const toUser = await getUser(target.id, interaction.guildId!);
+            const toUser = await getUser(target.id, 'global');
             toUser.balance += amount;
-            await updateUser(target.id, interaction.guildId!, { balance: toUser.balance });
+            await updateUser(target.id, 'global', { balance: toUser.balance });
 
             const successEmbed = EmbedFactory.success('Trade Successful!')
               .setDescription(`<@${interaction.user.id}> gave <@${target.id}> **${amount.toLocaleString()}** coins!`);

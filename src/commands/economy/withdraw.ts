@@ -17,7 +17,7 @@ export default {
     const amount = interaction.options.getInteger('amount', true);
 
     try {
-      const user = await getUser(interaction.user.id, interaction.guildId!);
+      const user = await getUser(interaction.user.id, 'global');
 
       if (user.bank < amount) {
         const embed = EmbedFactory.error('Insufficient Funds', `You only have **${user.bank.toLocaleString()}** coins in your bank.`);
@@ -27,7 +27,7 @@ export default {
       user.bank -= amount;
       user.balance += amount;
 
-      await updateUser(interaction.user.id, interaction.guildId!, { balance: user.balance, bank: user.bank });
+      await updateUser(interaction.user.id, 'global', { balance: user.balance, bank: user.bank });
 
       const embed = EmbedFactory.economy('Withdrawal Successful')
         .setDescription(`🏦 Withdrew **${amount.toLocaleString()}** coins from your bank!`)

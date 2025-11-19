@@ -31,7 +31,7 @@ export default {
     const amount = interaction.options.getInteger('amount', true);
 
     try {
-      const user = await getUser(interaction.user.id, interaction.guildId!);
+      const user = await getUser(interaction.user.id, 'global');
 
       if (user.balance < amount) {
         const embed = EmbedFactory.error('Insufficient Funds', `You only have **${user.balance.toLocaleString()}** coins.`);
@@ -68,7 +68,7 @@ export default {
 
       const winnings = won ? amount * multiplier : -amount;
       user.balance += winnings;
-      await updateUser(interaction.user.id, interaction.guildId!, { balance: user.balance });
+      await updateUser(interaction.user.id, 'global', { balance: user.balance });
 
       const colorEmoji = color === 'red' ? '🔴' : color === 'black' ? '⚫' : '🟢';
 

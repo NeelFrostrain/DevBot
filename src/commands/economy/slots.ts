@@ -20,7 +20,7 @@ export default {
     const bet = interaction.options.getInteger('bet', true);
 
     try {
-      const user = await getUser(interaction.user.id, interaction.guildId!);
+      const user = await getUser(interaction.user.id, 'global');
 
       if (user.balance < bet) {
         const embed = EmbedFactory.error(
@@ -59,7 +59,7 @@ export default {
       }
 
       user.balance += winnings;
-      await updateUser(interaction.user.id, interaction.guildId!, { balance: user.balance });
+      await updateUser(interaction.user.id, 'global', { balance: user.balance });
 
       const embed = EmbedFactory.custom(winnings > 0 ? '#00FF00' : '#FF0000', '🎰 Slot Machine')
         .setDescription(`${slots.join(' | ')}\n\n${result}`)

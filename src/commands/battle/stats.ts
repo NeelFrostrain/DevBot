@@ -23,7 +23,7 @@ export default {
       const petsKey = `pets.${interaction.guildId}.${target.id}`;
       const pets = await db.get(petsKey) || { pets: [] };
 
-      const levelData = await getUserLevel(target.id, interaction.guildId!);
+      const levelData = await getUserLevel(target.id, 'global');
 
       const baseDamage = 20;
       const baseDefense = 10;

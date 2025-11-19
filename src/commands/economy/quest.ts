@@ -51,7 +51,7 @@ export default {
     try {
       if (subcommand === 'list') {
         const quests = getAllQuests();
-        const levelData = await getUserLevel(interaction.user.id, interaction.guildId!);
+        const levelData = await getUserLevel(interaction.user.id, 'global');
         
         const embed = EmbedFactory.economy('📜 Available Quests')
           .setDescription('Use `/quest start <quest>` to begin a quest');
@@ -80,7 +80,7 @@ export default {
       }
 
       if (subcommand === 'active') {
-        const activeQuests = await getActiveQuests(interaction.user.id, interaction.guildId!);
+        const activeQuests = await getActiveQuests(interaction.user.id, 'global');
 
         if (activeQuests.length === 0) {
           return interaction.reply({
@@ -105,7 +105,7 @@ export default {
 
       if (subcommand === 'start') {
         const questId = interaction.options.getString('quest', true);
-        const result = await startQuest(interaction.user.id, interaction.guildId!, questId);
+        const result = await startQuest(interaction.user.id, 'global', questId);
 
         if (!result.success) {
           return interaction.reply({
@@ -139,7 +139,7 @@ export default {
       }
 
       if (subcommand === 'claim') {
-        const completedQuests = await checkQuestCompletion(interaction.user.id, interaction.guildId!);
+        const completedQuests = await checkQuestCompletion(interaction.user.id, 'global');
 
         if (completedQuests.length === 0) {
           return interaction.reply({
@@ -152,7 +152,7 @@ export default {
         let description = '';
 
         for (const { quest } of completedQuests) {
-          await giveQuestRewards(interaction.user.id, interaction.guildId!, quest);
+          await giveQuestRewards(interaction.user.id, 'global', quest);
           
           description += `**${quest.name}**\n`;
           description += `🎁 Rewards:\n`;

@@ -69,7 +69,7 @@ export default {
     .setDescription('Hunt monsters for rewards'),
   async execute(interaction: ChatInputCommandInteraction, client: ExtendedClient) {
     const userId = interaction.user.id;
-    const guildId = interaction.guildId!;
+    const guildId = 'global';
     const db = getDatabase();
     const cooldownKey = `cooldowns.hunt.${guildId}.${userId}`;
 

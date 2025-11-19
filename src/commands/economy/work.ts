@@ -14,7 +14,7 @@ export default {
     .setDescription('Work to earn money'),
   async execute(interaction: ChatInputCommandInteraction, client: ExtendedClient) {
     const userId = interaction.user.id;
-    const guildId = interaction.guildId!;
+    const guildId = 'global';
     const db = getDatabase();
     const cooldownKey = `cooldowns.work.${guildId}.${userId}`;
 

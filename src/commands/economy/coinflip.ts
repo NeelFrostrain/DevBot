@@ -28,7 +28,7 @@ export default {
     const bet = interaction.options.getInteger('bet', true);
 
     try {
-      const user = await getUser(interaction.user.id, interaction.guildId!);
+      const user = await getUser(interaction.user.id, 'global');
 
       if (user.balance < bet) {
         const embed = EmbedFactory.error(
@@ -43,7 +43,7 @@ export default {
       const winnings = won ? bet : -bet;
 
       user.balance += winnings;
-      await updateUser(interaction.user.id, interaction.guildId!, { balance: user.balance });
+      await updateUser(interaction.user.id, 'global', { balance: user.balance });
 
       const embed = EmbedFactory.custom(won ? '#00FF00' : '#FF0000', '🪙 Coinflip')
         .setDescription(`<@${interaction.user.id}>, the coin landed on **${result}**!`)

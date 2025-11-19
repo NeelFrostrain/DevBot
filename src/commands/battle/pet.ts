@@ -66,7 +66,7 @@ export default {
 
         await interaction.reply({ embeds: [embed] });
       } else if (subcommand === 'summon') {
-        const user = await getUser(interaction.user.id, interaction.guildId!);
+        const user = await getUser(interaction.user.id, 'global');
         const cost = 2000;
 
         if (user.balance < cost) {
@@ -81,7 +81,7 @@ export default {
         await db.set(key, userPets);
 
         user.balance -= cost;
-        await updateUser(interaction.user.id, interaction.guildId!, { balance: user.balance });
+        await updateUser(interaction.user.id, 'global', { balance: user.balance });
 
         const embed = EmbedFactory.success('🐾 Pet Summoned!')
           .setDescription(`You summoned a **${pet.name}**!`)
