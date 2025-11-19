@@ -44,7 +44,10 @@ export default {
 
     // Check if API key is configured
     if (!process.env.GOOGLE_API_KEY) {
-      await message.reply('Oops! 🔑 My AI brain isn\'t set up yet! The admin needs to add a Google API key. Check the setup guide! 📚');
+      // Only reply ONCE in the whole thread
+      if (!message.reference) {
+        await message.reply('Oops! 🔑 My AI brain isn\'t set up yet! The admin needs to add a Google API key. Check the setup guide! 📚');
+      }
       return;
     }
 
