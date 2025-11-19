@@ -7,14 +7,13 @@ export default {
     // Ignore bot messages
     if (message.author.bot) return;
 
-    if (message.author.bot || !message.guild) return;
-
-    // Prevent double replies with AI message system
+    // Check if bot is mentioned OR if it's a reply to the bot
     const botMention = `<@${client.user?.id}>`;
     const isMentioned = message.content.includes(botMention);
     const isReplyToBot = message.reference && message.mentions.repliedUser?.id === client.user?.id;
 
-    if (isMentioned || isReplyToBot) return;
+    // ONLY respond if mentioned OR replied to
+    if (!isMentioned && !isReplyToBot) return;
 
 
     // If it's both a mention and a reply, only treat it as a mention
