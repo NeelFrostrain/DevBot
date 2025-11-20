@@ -49,7 +49,7 @@ export default {
     async execute(interaction, client) {
         const bet = interaction.options.getInteger('bet', true);
         try {
-            const user = await getUser(interaction.user.id, interaction.guildId);
+            const user = await getUser(interaction.user.id, 'global');
             if (user.balance < bet) {
                 const embed = EmbedFactory.error('Insufficient Funds', `You only have **${user.balance.toLocaleString()}** coins.`);
                 return interaction.reply({ embeds: [embed], ephemeral: true });
@@ -65,7 +65,7 @@ export default {
             if (playerValue === 21) {
                 games.delete(gameId);
                 user.balance += Math.floor(bet * 1.5);
-                await updateUser(interaction.user.id, interaction.guildId, { balance: user.balance });
+                await updateUser(interaction.user.id, 'global', { balance: user.balance });
                 embed.setDescription(`🎉 BLACKJACK! <@${interaction.user.id}> wins 1.5x your bet!`);
                 embed.setColor('#00FF00');
                 return interaction.reply({ embeds: [embed] });
@@ -89,7 +89,7 @@ export default {
                     if (newValue > 21) {
                         games.delete(gameId);
                         user.balance -= bet;
-                        await updateUser(interaction.user.id, interaction.guildId, { balance: user.balance });
+                        await updateUser(interaction.user.id, 'global', { balance: user.balance });
                         const bustEmbed = EmbedFactory.error('Bust!')
                             .setDescription(`<@${interaction.user.id}> busted!`)
                             .addFields({ name: 'Your Hand', value: `${formatHand(game.playerHand)} (${newValue})`, inline: true }, { name: 'Result', value: `Lost ${bet.toLocaleString()} coins`, inline: true }, { name: 'Balance', value: `${user.balance.toLocaleString()} coins`, inline: true });
@@ -124,7 +124,7 @@ export default {
                         winnings = -bet;
                         user.balance -= bet;
                     }
-                    await updateUser(interaction.user.id, interaction.guildId, { balance: user.balance });
+                    await updateUser(interaction.user.id, 'global', { balance: user.balance });
                     games.delete(gameId);
                     const finalEmbed = EmbedFactory.custom(winnings > 0 ? '#00FF00' : winnings < 0 ? '#FF0000' : '#FFD700', '🃏 Blackjack - Results')
                         .addFields({ name: 'Your Hand', value: `${formatHand(game.playerHand)} (${playerValue})`, inline: true }, { name: 'Dealer Hand', value: `${formatHand(game.dealerHand)} (${dealerValue})`, inline: true }, { name: 'Result', value: result, inline: true }, { name: 'Winnings', value: `${winnings > 0 ? '+' : ''}${winnings.toLocaleString()} coins`, inline: true }, { name: 'Balance', value: `${user.balance.toLocaleString()} coins`, inline: true });

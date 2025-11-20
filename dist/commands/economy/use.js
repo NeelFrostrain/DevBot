@@ -13,7 +13,7 @@ export default {
     async execute(interaction, client) {
         const itemId = interaction.options.getString('item', true);
         try {
-            const result = await useItem(interaction.user.id, interaction.guildId, itemId, 'general');
+            const result = await useItem(interaction.user.id, 'global', itemId, 'general');
             if (!result.success) {
                 return interaction.reply({
                     embeds: [EmbedFactory.error('Cannot Use Item', result.error || 'Unknown error')],

@@ -18,7 +18,7 @@ export default {
         const choice = interaction.options.getString('choice', true);
         const bet = interaction.options.getInteger('bet', true);
         try {
-            const user = await getUser(interaction.user.id, interaction.guildId);
+            const user = await getUser(interaction.user.id, 'global');
             if (user.balance < bet) {
                 const embed = EmbedFactory.error('Insufficient Funds', `You don't have enough coins! You only have **${user.balance.toLocaleString()}** coins.`);
                 return interaction.reply({ embeds: [embed], ephemeral: true });
@@ -27,7 +27,7 @@ export default {
             const won = result === choice;
             const winnings = won ? bet : -bet;
             user.balance += winnings;
-            await updateUser(interaction.user.id, interaction.guildId, { balance: user.balance });
+            await updateUser(interaction.user.id, 'global', { balance: user.balance });
             const embed = EmbedFactory.custom(won ? '#00FF00' : '#FF0000', '🪙 Coinflip')
                 .setDescription(`<@${interaction.user.id}>, the coin landed on **${result}**!`)
                 .addFields({ name: '🎯 Your Choice', value: choice, inline: true }, { name: '🎁 Result', value: won ? `Won ${bet.toLocaleString()} coins!` : `Lost ${bet.toLocaleString()} coins!`, inline: true }, { name: '💵 Balance', value: `${user.balance.toLocaleString()} coins`, inline: true });

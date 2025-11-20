@@ -57,7 +57,7 @@ export default {
                 await interaction.reply({ embeds: [embed] });
             }
             else if (subcommand === 'summon') {
-                const user = await getUser(interaction.user.id, interaction.guildId);
+                const user = await getUser(interaction.user.id, 'global');
                 const cost = 2000;
                 if (user.balance < cost) {
                     const embed = EmbedFactory.error('Insufficient Funds', `You need **${cost.toLocaleString()}** coins to summon a pet!`);
@@ -68,7 +68,7 @@ export default {
                 userPets.pets.push({ ...pet, summonedAt: Date.now() });
                 await db.set(key, userPets);
                 user.balance -= cost;
-                await updateUser(interaction.user.id, interaction.guildId, { balance: user.balance });
+                await updateUser(interaction.user.id, 'global', { balance: user.balance });
                 const embed = EmbedFactory.success('🐾 Pet Summoned!')
                     .setDescription(`You summoned a **${pet.name}**!`)
                     .addFields({ name: '🎭 Rarity', value: pet.rarity, inline: true }, { name: '⚔️ Damage', value: `${pet.damage}`, inline: true }, { name: '❤️ HP', value: `${pet.hp}`, inline: true });

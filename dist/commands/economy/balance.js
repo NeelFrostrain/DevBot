@@ -11,7 +11,7 @@ export default {
     async execute(interaction, client) {
         const target = interaction.options.getUser('user') || interaction.user;
         try {
-            const user = await getUser(target.id, interaction.guildId);
+            const user = await getUser(target.id, 'global'); // Global economy
             const embed = EmbedFactory.economy(`💰 ${target.username}'s Balance`)
                 .setThumbnail(target.displayAvatarURL())
                 .addFields({ name: '💵 Wallet', value: `${user.balance.toLocaleString()} coins`, inline: true }, { name: '🏦 Bank', value: `${user.bank.toLocaleString()} coins`, inline: true }, { name: '💎 Total', value: `${(user.balance + user.bank).toLocaleString()} coins`, inline: true });

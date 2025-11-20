@@ -7,7 +7,7 @@ export default {
         .setDescription('Claim your weekly reward'),
     async execute(interaction, client) {
         const userId = interaction.user.id;
-        const guildId = interaction.guildId;
+        const guildId = 'global';
         const db = getDatabase();
         const cooldownKey = `cooldowns.weekly.${guildId}.${userId}`;
         try {

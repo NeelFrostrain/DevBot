@@ -5,8 +5,6 @@ import { analytics } from '../utils/analytics.js';
 import { EmbedFactory } from '../utils/embeds.js';
 import { getDatabase } from '../database/index.js';
 
-import { getDatabase } from '../database/index.js';
-
 export default {
   name: 'guildMemberAdd',
   async execute(member: GuildMember, client: ExtendedClient) {

@@ -1,10 +1,34 @@
 import { inviteTracker } from '../utils/inviteTracker.js';
 import { analytics } from '../utils/analytics.js';
 import { EmbedFactory } from '../utils/embeds.js';
+import { getDatabase } from '../database/index.js';
 export default {
     name: 'guildMemberAdd',
     async execute(member, client) {
         try {
+            // Check global ban list FIRST
+            const db = getDatabase();
+            const banList = await db.get('globalBans') || {};
+            if (banList[member.id]) {
+                const ban = banList[member.id];
+                console.log(`🚫 Global banned user joined: ${member.user.tag} - Auto-banning...`);
+                try {
+                    // Send DM before banning (optional)
+                    try {
+                        await member.send(`You have been globally banned from all servers with this bot.\n**Reason:** ${ban.reason}`);
+                    }
+                    catch (error) {
+                        // User has DMs disabled
+                    }
+                    // Ban the user
+                    await member.ban({ reason: `Global Ban: ${ban.reason}` });
+                    console.log(`✅ Successfully banned ${member.user.tag} from ${member.guild.name}`);
+                }
+                catch (error) {
+                    console.error(`❌ Failed to ban ${member.user.tag}:`, error);
+                }
+                return; // Stop processing
+            }
             // Track join in analytics
             await analytics.trackJoin(member.id, member.guild.id);
             // Track invite usage

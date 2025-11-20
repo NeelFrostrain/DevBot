@@ -23,14 +23,14 @@ export default {
             return interaction.reply({ embeds: [embed], ephemeral: true });
         }
         try {
-            const user = await getUser(interaction.user.id, interaction.guildId);
+            const user = await getUser(interaction.user.id, 'global');
             const totalCost = item.price * amount;
             if (user.balance < totalCost) {
                 const embed = EmbedFactory.error('Insufficient Funds', `You need **${totalCost.toLocaleString()}** coins but only have **${user.balance.toLocaleString()}** coins.`);
                 return interaction.reply({ embeds: [embed], ephemeral: true });
             }
             user.balance -= totalCost;
-            await updateUser(interaction.user.id, interaction.guildId, { balance: user.balance });
+            await updateUser(interaction.user.id, 'global', { balance: user.balance });
             const db = getDatabase();
             const inventoryPath = `inventory.${interaction.guildId}.${interaction.user.id}`;
             const inventory = await db.get(inventoryPath) || { items: [] };

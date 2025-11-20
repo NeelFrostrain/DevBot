@@ -14,7 +14,7 @@ export default {
     async execute(interaction, client) {
         const bet = interaction.options.getInteger('bet', true);
         try {
-            const user = await getUser(interaction.user.id, interaction.guildId);
+            const user = await getUser(interaction.user.id, 'global');
             if (user.balance < bet) {
                 const embed = EmbedFactory.error('Insufficient Funds', `You don't have enough coins! You only have **${user.balance.toLocaleString()}** coins.`);
                 return interaction.reply({ embeds: [embed], ephemeral: true });
@@ -49,7 +49,7 @@ export default {
                 result = '😢 No match...';
             }
             user.balance += winnings;
-            await updateUser(interaction.user.id, interaction.guildId, { balance: user.balance });
+            await updateUser(interaction.user.id, 'global', { balance: user.balance });
             const embed = EmbedFactory.custom(winnings > 0 ? '#00FF00' : '#FF0000', '🎰 Slot Machine')
                 .setDescription(`${slots.join(' | ')}\n\n${result}`)
                 .addFields({ name: '💰 Bet', value: `${bet.toLocaleString()} coins`, inline: true }, { name: '🎁 Result', value: `${winnings > 0 ? '+' : ''}${winnings.toLocaleString()} coins`, inline: true }, { name: '💵 Balance', value: `${user.balance.toLocaleString()} coins`, inline: true });

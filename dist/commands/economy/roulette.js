@@ -18,7 +18,7 @@ export default {
         const betType = interaction.options.getString('bet_type', true);
         const amount = interaction.options.getInteger('amount', true);
         try {
-            const user = await getUser(interaction.user.id, interaction.guildId);
+            const user = await getUser(interaction.user.id, 'global');
             if (user.balance < amount) {
                 const embed = EmbedFactory.error('Insufficient Funds', `You only have **${user.balance.toLocaleString()}** coins.`);
                 return interaction.reply({ embeds: [embed], ephemeral: true });
@@ -55,7 +55,7 @@ export default {
             }
             const winnings = won ? amount * multiplier : -amount;
             user.balance += winnings;
-            await updateUser(interaction.user.id, interaction.guildId, { balance: user.balance });
+            await updateUser(interaction.user.id, 'global', { balance: user.balance });
             const colorEmoji = color === 'red' ? '🔴' : color === 'black' ? '⚫' : '🟢';
             const embed = EmbedFactory.custom(won ? '#00FF00' : '#FF0000', '🎰 Roulette')
                 .setDescription(`The ball landed on ${colorEmoji} **${number}**!`)
