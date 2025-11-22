@@ -55,9 +55,12 @@ export default {
         'Permission Denied',
         'Only the bot owner can manage the global ban list!'
       );
-      return interaction.reply({ embeds: [embed], ephemeral: true });
+      await interaction.deferReply({ ephemeral: true });
+      return interaction.editReply({ embeds: [embed] });
     }
 
+    await interaction.deferReply({ ephemeral: true });
+    
     const subcommand = interaction.options.getSubcommand();
     const db = getDatabase();
 
@@ -69,7 +72,7 @@ export default {
         // Validate user ID
         if (!/^\d{17,19}$/.test(userId)) {
           const embed = EmbedFactory.error('Invalid User ID', 'Please provide a valid Discord user ID (17-19 digits).');
-          return interaction.reply({ embeds: [embed], ephemeral: true });
+          return interaction.editReply({ embeds: [embed] });
         }
 
         // Try to fetch user info
@@ -112,7 +115,7 @@ export default {
             { name: '⚠️ Effect', value: 'Will be auto-banned when joining any server', inline: false }
           );
 
-        await interaction.reply({ embeds: [embed] });
+        await interaction.editReply({ embeds: [embed] });
 
       } else if (subcommand === 'remove') {
         const userId = interaction.options.getString('userid', true);
@@ -124,7 +127,7 @@ export default {
             'Not Found',
             `User ID \`${userId}\` is not in the global ban list.`
           );
-          return interaction.reply({ embeds: [embed], ephemeral: true });
+          return interaction.editReply({ embeds: [embed] });
         }
 
         const username = banList[userId].username;
@@ -138,7 +141,7 @@ export default {
             { name: '✅ Status', value: 'Can now join servers', inline: true }
           );
 
-        await interaction.reply({ embeds: [embed] });
+        await interaction.editReply({ embeds: [embed] });
 
       } else if (subcommand === 'list') {
         const banList = await db.get('globalBans') || {};
@@ -147,7 +150,7 @@ export default {
         if (bans.length === 0) {
           const embed = EmbedFactory.info('Global Ban List')
             .setDescription('No users are currently globally banned.');
-          return interaction.reply({ embeds: [embed], ephemeral: true });
+          return interaction.editReply({ embeds: [embed] });
         }
 
         const embed = EmbedFactory.warning('🚫 Global Ban List')
@@ -156,7 +159,7 @@ export default {
           ).join('\n\n')}`)
           .setFooter({ text: `Total: ${bans.length} banned users` });
 
-        await interaction.reply({ embeds: [embed], ephemeral: true });
+        await interaction.editReply({ embeds: [embed] });
 
       } else if (subcommand === 'check') {
         const userId = interaction.options.getString('userid', true);
@@ -170,18 +173,18 @@ export default {
               { name: '📝 Reason', value: ban.reason, inline: true },
               { name: '📅 Banned At', value: `<t:${Math.floor(ban.bannedAt / 1000)}:R>`, inline: true }
             );
-          await interaction.reply({ embeds: [embed], ephemeral: true });
+          await interaction.editReply({ embeds: [embed] });
         } else {
           const embed = EmbedFactory.success('✅ User is Not Banned')
             .setDescription(`User ID \`${userId}\` is not in the global ban list.`);
-          await interaction.reply({ embeds: [embed], ephemeral: true });
+          await interaction.editReply({ embeds: [embed] });
         }
       }
 
     } catch (error) {
       console.error('Global ban error:', error);
       const errorEmbed = EmbedFactory.error('Error', 'Failed to manage global ban list.');
-      await interaction.reply({ embeds: [errorEmbed], ephemeral: true });
+      await interaction.editReply({ embeds: [errorEmbed] });
     }
   }
 };
